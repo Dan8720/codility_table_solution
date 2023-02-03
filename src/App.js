@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from 'react';
 
-const USERS_URL = 'https://localhost:4000/users';
-
-const [users, setUsers] = useState([]);
-const [currentPage, setCurrentPage] = useState(1);
-const [perPage] = useState(10);
-
-useEffect(() => {
-  fetch(`${USERS_URL}=${currentPage}&limit=${perPage}`)
-      .then(response => response.json())
-      .then(data => setUsers(data.users))
-      .catch(error => console.log(error));
-}, [currentPage, perPage]);
+const USERS_URL = 'http://localhost:4000/users';
 
 function App() {
+
+    const [users, setUsers] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [perPage] = useState(10);
+
+    useEffect(() => {
+        fetch(`${USERS_URL}?_page=${currentPage}&_limit=${perPage}`)
+            .then(response => {
+                const count = response.headers.get('X-Total-Count');
+                return response.json().then(response => ({
+                    results: response,
+                    count
+                }))
+
+            } )
+            .then(data => setUsers(data))
+            .catch(error => console.error(error));
+    }, [currentPage, perPage]);
+
   return (
       <div>
         <table className="table">
