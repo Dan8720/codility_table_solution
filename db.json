@@ -1,0 +1,7 @@
+{
+  "users": [
+    { "id": 1, "fistName": "James", "laseName": "Ramsden" },
+    { "id": 2, "fistName": "Thomas", "laseName": "Ramsden" },
+    { "id": 3, "fistName": "Daniel", "laseName": "Johnston" }
+  ]
+}
